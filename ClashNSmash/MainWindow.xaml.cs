@@ -38,19 +38,19 @@ namespace ClashNSmash
 
         private void gridInit()
         {
-            MapGrid.Width = level.XSize * 32;
-            MapGrid.Height = level.YSize * 32;
-            for (int column = 0; column < level.XSize; column++)
+            MapGrid.Width = level.Map.Width * 32;
+            MapGrid.Height = level.Map.Height * 32;
+            for (int column = 0; column < level.Map.Width; column++)
             {
                 MapGrid.ColumnDefinitions.Add(new ColumnDefinition());
             }
-            for (int row = 0; row < level.YSize; row++)
+            for (int row = 0; row < level.Map.Height; row++)
             {
                 MapGrid.RowDefinitions.Add(new RowDefinition());
             }
-            for (int column = 0; column < level.XSize; column++)
+            for (int column = 0; column < level.Map.Width; column++)
             {
-                for (int row = 0; row < level.YSize; row++)
+                for (int row = 0; row < level.Map.Height; row++)
                 {
                     Image tempImage = new Image();
                     Grid.SetRow(tempImage, row);
@@ -64,7 +64,7 @@ namespace ClashNSmash
         {
             foreach (Image child in MapGrid.Children)
             {
-                Char tempTileChar = level.getTile(Grid.GetColumn(child), Grid.GetRow(child)).Icon;
+                Char tempTileChar = level.Map.Tiles[Grid.GetColumn(child), Grid.GetRow(child)].Icon;
                 if (tempTileChar == '■')
                     child.Source = wallBitmap;
                 else if (tempTileChar == ' ')
@@ -76,30 +76,45 @@ namespace ClashNSmash
                 else if (tempTileChar == 'G')
                     child.Source = gelatinousCubeBitmap;
             }
+            BattleLogScrollViewer.Content += level.ExtractBattleLog();
+            BattleLogScrollViewer.ScrollToEnd();
+
+            if (!level.Player.Existence)
+            {
+                GameEndLabel.Content = "GAME OVER";
+            }
+            level.enemiesAct();
+            PlayerTextBox.Text = "" + level.Player;
+            EnemyTextBox.Text = "" + level.GetLastEnemy();
         }
 
         private void OnButtonKeyDown(object sender, KeyEventArgs e)
         {
-            if(e.Key == Key.Up)
+            if(e.Key == Key.Up && level.Player.Existence)
             {
-                level.movePlayer(0,-1);
+                level.move(level.Player, 0,-1);
                 refresh();
             }
-            if(e.Key == Key.Down)
+            if(e.Key == Key.Down && level.Player.Existence)
             {
-                level.movePlayer(0,1);
+                level.move(level.Player, 0, 1);
                 refresh();
             }
-            if(e.Key == Key.Right)
+            if(e.Key == Key.Right && level.Player.Existence)
             {
-                level.movePlayer(1,0);
+                level.move(level.Player, 1, 0);
                 refresh();
             }
-            if(e.Key == Key.Left)
+            if(e.Key == Key.Left && level.Player.Existence)
             {
-                level.movePlayer(-1,0);
+                level.move(level.Player, -1,0);
                 refresh();
             }
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }

@@ -32,9 +32,9 @@ namespace ClashNSmash
         public Character()
         {
             this.name = "Default Character";
-            this.health = 1;
-            this.attack = 0;
-            this.defense = 0;
+            this.health = 5;
+            this.attack = 3;
+            this.defense = 1;
             this.speed = 0;
             this.existence = true;
         }
@@ -58,7 +58,7 @@ namespace ClashNSmash
             this.Speed = s;
             this.Existence = exist;
         }
-        public void dealAttack(Character target)
+        public int dealAttack(Character target)
         {
             int damageDealt = Attack - target.Defense;
             if (damageDealt > 0)
@@ -66,9 +66,13 @@ namespace ClashNSmash
                 target.Health -= damageDealt;
                 if (target.Health <= 0)
                 {
-                    //TODO: Death action
+                    target.Health = 0;
+                    target.Existence = false;
                 }
             }
+            else
+                return 0;
+            return damageDealt;
         }
 
         public override bool Equals(object obj)
