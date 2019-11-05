@@ -11,15 +11,17 @@ namespace ClashNSmash
         private char icon;
         private Character occupant;
 
+        public char Icon { get => icon; set => icon = value; }
+
         public Tile(string type)
         {
             if (type.ToLower() == "floor")
             {
-                icon = ' ';
+                Icon = ' ';
             }
             else if (type.ToLower() == "wall")
             {
-                icon = '■';
+                Icon = '■';
             }
         }
         public Character getOccupant ()
@@ -30,14 +32,9 @@ namespace ClashNSmash
         {
             this.occupant = newOccupant;
             if (newOccupant == null)
-                icon = ' ';
+                Icon = ' ';
             else
-                icon = newOccupant.getIcon();
-        }
-            
-        public char getIcon()
-        {
-            return icon;
+                Icon = newOccupant.Icon;
         }
     }
 }

@@ -11,17 +11,18 @@ namespace ClashNSmash
 
         public Player() : base()
         {
-            icon = '@';
+            Name = "Player";
+            Icon = '@';
         }
 
         public Player(string n, int h, int a, int d, int s) : base(n, h, a, d, s)
         {
-            icon = '@';
+            Icon = '@';
         }
 
         public Player(string n, int h, int a, int d, int s, bool v) : base(n, h, a, d, s, v)
         {
-            icon = '@';
+            Icon = '@';
         }
 
         //method

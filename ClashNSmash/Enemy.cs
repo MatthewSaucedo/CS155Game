@@ -12,17 +12,18 @@ namespace ClashNSmash
 
         public Enemy() : base()
         {
-            icon = name[0];
+            Name = "Gelatinous Cube";
+            Icon = Name[0];
         }
 
         public Enemy(string n, int h, int a, int d, int s) : base(n, h, a, d, s)
         {
-            icon = name[0];
+            Icon = Name[0];
         }
 
         public Enemy(string n, int h, int a, int d, int s, bool v) : base(n, h, a, d, s, v)
         {
-            icon = name[0];
+            Icon = Name[0];
         }
 
         // method
@@ -35,9 +36,7 @@ namespace ClashNSmash
 
         public override String ToString()
         {
-            string temp = "";
-            temp += base.ToString();
-            return temp;
+            return base.ToString();
         }
     }
 }

@@ -49,13 +49,21 @@ namespace ClashNSmash
         }
         public void movePlayer (int dx, int dy)
         {
-            if (player.getPos().x + dx < xSize && player.getPos().x + dx >= 0 &&
-                player.getPos().y + dy < ySize && player.getPos().y + dy >= 0 &&
-                map[player.getPos().x + dx, player.getPos().y + dy].getIcon() == ' ')
+            if (player.X + dx < xSize && player.X + dx >= 0 &&
+                player.Y + dy < ySize && player.Y + dy >= 0 &&
+                map[player.X + dx, player.Y + dy].Icon != '■')
             {
-                map[player.getPos().x + dx, player.getPos().y + dy].setOccupant(player);
-                map[player.getPos().x, player.getPos().y].setOccupant(null);
-                player.setPos(new coord(player.getPos().x + dx, player.getPos().y + dy));
+                if (map[player.X + dx, player.Y + dy].Icon == ' ')
+                {
+                    map[player.X + dx, player.Y + dy].setOccupant(player);
+                    map[player.X, player.Y].setOccupant(null);
+                    player.X += dx;
+                    player.Y += dy;
+                }
+                else
+                {
+
+                }
             }
         }
 
@@ -76,7 +84,8 @@ namespace ClashNSmash
             }
             map[2,2].setOccupant(player);
             map[4, 2].setOccupant(new Enemy());
-            player.setPos(new coord(2,2));
+            player.X = 2;
+            player.Y = 2;
         }
 
         public override string ToString()
@@ -86,7 +95,7 @@ namespace ClashNSmash
             {
                 for (int x = 0; x < xSize; x++)
                 {
-                    returnString += map[x,y].getIcon() + " ";
+                    returnString += map[x,y].Icon + " ";
                 }
                 returnString += "\n";
             }

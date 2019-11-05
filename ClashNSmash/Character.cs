@@ -9,18 +9,29 @@ namespace ClashNSmash
 {
     public class Character
     {
-        protected string name;
-        protected coord pos;
-        protected int health;
-        protected int attack;
-        protected int defense;
-        protected int speed;
-        protected bool existence;
-        protected char icon;
+        private string name;
+        private int x;
+        private int y;
+        private int health;
+        private int attack;
+        private int defense;
+        private int speed;
+        private bool existence;
+        private char icon;
+
+        public string Name { get => name; set => name = value; }
+        public int Health { get => health; set => health = value; }
+        public int Attack { get => attack; set => attack = value; }
+        public int Defense { get => defense; set => defense = value; }
+        public int Speed { get => speed; set => speed = value; }
+        public bool Existence { get => existence; set => existence = value; }
+        public char Icon { get => icon; set => icon = value; }
+        public int X { get => x; set => x = value; }
+        public int Y { get => y; set => y = value; }
 
         public Character()
         {
-            this.name = "Skeleton";
+            this.name = "Default Character";
             this.health = 1;
             this.attack = 0;
             this.defense = 0;
@@ -40,97 +51,27 @@ namespace ClashNSmash
 
         public Character(string n, int h, int a, int d, int s, bool exist)
         {
-            this.name = n;
-            this.health = h;
-            this.attack = a;
-            this.defense = d;
-            this.speed = s;
-            this.existence = exist;
+            this.Name = n;
+            this.Health = h;
+            this.Attack = a;
+            this.Defense = d;
+            this.Speed = s;
+            this.Existence = exist;
         }
-
-        //getters
-        public String getName()
+        public void dealAttack(Character target)
         {
-            return this.name;
+            int damageDealt = Attack - target.Defense;
+            if (damageDealt > 0)
+            {
+                target.Health -= damageDealt;
+                if (target.Health <= 0)
+                {
+                    //TODO: Death action
+                }
+            }
         }
 
-        public int getHealth()
-        {
-            return this.health;
-        }
-
-        public int getAttack()
-        {
-            return this.attack;
-        }
-
-        public int getDefense()
-        {
-            return this.defense;
-        }
-
-        public int getSpeed()
-        {
-            return this.speed;
-        }
-
-        public bool getExistence()
-        {
-            return this.existence;
-        }
-
-        public char getIcon()
-        {
-            return icon;
-        }
-
-        public coord getPos()
-        {
-            return pos;
-        }
-
-
-        //setters
-        public void setName(string n)
-        {
-            this.name = n;
-        }
-        public void setHealth(int h)
-        {
-            this.health = h;
-        }
-
-        public void setAttack(int a)
-        {
-            this.attack = a;
-        }
-
-        public void setDefense(int d)
-        {
-            this.defense = d;
-        }
-
-        public void setSpeed(int s)
-        {
-            this.speed = s;
-        }
-
-        public void setExistence(bool exist)
-        {
-            this.existence = exist;
-        }
-
-        public void setIcon(char i)
-        {
-            this.icon = i;
-        }
-
-        public void setPos(coord pos)
-        {
-            this.pos = pos;
-        }
-
-       public override bool Equals(object obj)
+        public override bool Equals(object obj)
         {
             if (obj == null || !this.GetType().Equals(obj.GetType()))
             {
@@ -139,27 +80,20 @@ namespace ClashNSmash
             else
             {
                 Character c = (Character)obj;
-                return ((getName() == c.getName()) && (getHealth() == c.getHealth()) && (getAttack() == c.getAttack()) &&
-                    (getDefense() == c.getDefense()) && (getSpeed() == c.getSpeed()));
+                return ((Name == c.Name) && (Health == c.Health) && (Attack == c.Attack) &&
+                    (Defense == c.Defense) && (Speed == c.Speed));
             }
         }
-
         public override string ToString()
         {
             string temp = "";
-            temp += "Name: " + getName() + "\n";
-            temp += "Health: " + getHealth() + "\n";
-            temp += "Attack: " + getAttack() + "\n";
-            temp += "Defense: " + getDefense() + "\n";
-            temp += "Speed: " + getSpeed() + "\n";
-            temp += "Exist: " + getExistence() + "\n";
+            temp += "Name: " + Name + "\n";
+            temp += "Health: " + Health + "\n";
+            temp += "Attack: " + Attack + "\n";
+            temp += "Defense: " + Defense + "\n";
+            temp += "Speed: " + Speed + "\n";
+            temp += "Exist: " + Existence + "\n";
             return temp;
         }
-
-
-
-
-
-
     }
 }

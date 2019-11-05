@@ -100,14 +100,22 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Plains.png" />
-    <Resource Include="Images\Wall.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\tempchar.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\tempskeleton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\GelatinousCube.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Floor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Pillar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Player.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

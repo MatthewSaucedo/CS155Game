@@ -21,10 +21,11 @@ namespace ClashNSmash
     public partial class MainWindow : Window
     {
         Level level;
-        static BitmapImage grassBitmap = new BitmapImage(new Uri(@"\Images\Plains.png", UriKind.Relative));
-        static BitmapImage wallBitmap = new BitmapImage(new Uri(@"\Images\Wall.png", UriKind.Relative));
-        static BitmapImage playerBitmap = new BitmapImage(new Uri(@"\Images\tempchar.png", UriKind.Relative));
+        static BitmapImage floorBitmap = new BitmapImage(new Uri(@"\Images\Floor.png", UriKind.Relative));
+        static BitmapImage wallBitmap = new BitmapImage(new Uri(@"\Images\Pillar.png", UriKind.Relative));
+        static BitmapImage playerBitmap = new BitmapImage(new Uri(@"\Images\Player.png", UriKind.Relative));
         static BitmapImage skeletonBitmap = new BitmapImage(new Uri(@"\Images\tempskeleton.png", UriKind.Relative));
+        static BitmapImage gelatinousCubeBitmap = new BitmapImage(new Uri(@"\Images\gelatinousCube.png", UriKind.Relative));
         public MainWindow()
         {
             InitializeComponent();
@@ -63,15 +64,17 @@ namespace ClashNSmash
         {
             foreach (Image child in MapGrid.Children)
             {
-                Char tempTileChar = level.getTile(Grid.GetColumn(child), Grid.GetRow(child)).getIcon();
+                Char tempTileChar = level.getTile(Grid.GetColumn(child), Grid.GetRow(child)).Icon;
                 if (tempTileChar == '■')
                     child.Source = wallBitmap;
                 else if (tempTileChar == ' ')
-                    child.Source = grassBitmap;
+                    child.Source = floorBitmap;
                 else if (tempTileChar == '@')
                     child.Source = playerBitmap;
                 else if (tempTileChar == 'S')
                     child.Source = skeletonBitmap;
+                else if (tempTileChar == 'G')
+                    child.Source = gelatinousCubeBitmap;
             }
         }
 
