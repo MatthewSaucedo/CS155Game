@@ -62,6 +62,16 @@ namespace ClashNSmash
         }
         private void refresh()
         {
+            BattleLogScrollViewer.Content += level.ExtractBattleLog();
+            BattleLogScrollViewer.ScrollToEnd();
+
+            if (!level.Player.Existence)
+            {
+                GameEndLabel.Content = "GAME OVER";
+            }
+            level.enemiesAct();
+            PlayerInfoLabel.Content = "" + level.Player;
+            EnemyInfoLabel.Content = "" + level.GetLastEnemy();
             foreach (Image child in MapGrid.Children)
             {
                 Char tempTileChar = level.Map.Tiles[Grid.GetColumn(child), Grid.GetRow(child)].Icon;
@@ -76,16 +86,6 @@ namespace ClashNSmash
                 else if (tempTileChar == 'G')
                     child.Source = gelatinousCubeBitmap;
             }
-            BattleLogScrollViewer.Content += level.ExtractBattleLog();
-            BattleLogScrollViewer.ScrollToEnd();
-
-            if (!level.Player.Existence)
-            {
-                GameEndLabel.Content = "GAME OVER";
-            }
-            level.enemiesAct();
-            PlayerTextBox.Text = "" + level.Player;
-            EnemyTextBox.Text = "" + level.GetLastEnemy();
         }
 
         private void OnButtonKeyDown(object sender, KeyEventArgs e)

@@ -10,9 +10,7 @@ namespace ClashNSmash
     {
         private char icon;
         private Character occupant;
-
         public char Icon { get => icon; set => icon = value; }
-
         public Tile(string type)
         {
             if (type.ToLower() == "floor")

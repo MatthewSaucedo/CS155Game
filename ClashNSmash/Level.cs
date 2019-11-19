@@ -32,12 +32,12 @@ namespace ClashNSmash
             player.X = 2;
             player.Y = 2;
             Map.Tiles[2, 2].setOccupant(player);
-            Enemy newEnemy = new Enemy();
+            Enemy newEnemy = new GelCube();
             characters.Add(newEnemy);
             Map.Tiles[4, 2].setOccupant(newEnemy);
             newEnemy.X = 4;
             newEnemy.Y = 2;
-            newEnemy = new Enemy();
+            newEnemy = new GelCube();
             characters.Add(newEnemy);
             Map.Tiles[4, 4].setOccupant(newEnemy);
             newEnemy.X = 4;

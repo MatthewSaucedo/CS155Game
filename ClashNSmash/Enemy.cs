@@ -7,26 +7,12 @@ using System.Threading.Tasks;
 
 namespace ClashNSmash
 {
-    public class Enemy : Character
+    public abstract class Enemy : Character
     {
-        int patrolCounter = 0;
-        int patrolCounterMax = 4;
-        public Enemy() : base()
+        //method
+        public Enemy(string name, int health, int attack, int defense) : base(name, health, attack, defense)
         {
-            Name = "Gelatinous Cube";
-            Icon = Name[0];
         }
-
-        public Enemy(string n, int h, int a, int d, int s) : base(n, h, a, d, s)
-        {
-            Icon = Name[0];
-        }
-
-        public Enemy(string n, int h, int a, int d, int s, bool v) : base(n, h, a, d, s, v)
-        {
-            Icon = Name[0];
-        }
-
         // method
         public string battlecry()
         {
@@ -34,28 +20,11 @@ namespace ClashNSmash
             temp += "ROOOAR";
             return temp;
         }
-
-        public coord patrolBlock()
+        public virtual coord patrolBlock()
         {
-            if (patrolCounter >= patrolCounterMax)
-                patrolCounter = 0;
-
-            coord returnCoord;
-
-            if (patrolCounter == 0)
-                returnCoord = new coord(1, 0);
-            else if (patrolCounter == 1)
-                returnCoord = new coord(0, -1);
-            else if (patrolCounter == 2)
-                returnCoord = new coord(-1, 0);
-            else if (patrolCounter == 3)
-                returnCoord = new coord(0, 1);
-            else
-                returnCoord = new coord(0,0);
-
-            patrolCounter++;
-            return returnCoord;
+            return new coord(0, 0);
         }
+        //override
         public override String ToString()
         {
             return base.ToString();

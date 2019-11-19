@@ -8,23 +8,16 @@ namespace ClashNSmash
 {
     public class Player : Character
     {
-
+        //constructor
         public Player() : base()
         {
             Name = "Player";
             Icon = '@';
         }
-
-        public Player(string n, int h, int a, int d, int s) : base(n, h, a, d, s)
+        public Player(string n, int h, int a, int d) : base(n, h, a, d)
         {
             Icon = '@';
         }
-
-        public Player(string n, int h, int a, int d, int s, bool v) : base(n, h, a, d, s, v)
-        {
-            Icon = '@';
-        }
-
         //method
         public string battlecry()
         {
@@ -32,14 +25,12 @@ namespace ClashNSmash
             temp += "HEEE-YAAAHH!!";
             return temp;
         }
-
+        //override
         public override String ToString()
         {
             string temp = "";
             temp += base.ToString();
             return temp;
-
         }
-
     }
 }

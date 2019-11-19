@@ -64,6 +64,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Character.cs" />
+    <Compile Include="Dragon.cs" />
+    <Compile Include="GelCube.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Enemy.cs" />
