@@ -9,9 +9,8 @@ namespace ClashNSmash
     public class Player : Character
     {
         //constructor
-        public Player() : base()
+        public Player() : base("Player", 10, 3, 1)
         {
-            Name = "Player";
             Icon = '@';
         }
         public Player(string n, int h, int a, int d) : base(n, h, a, d)

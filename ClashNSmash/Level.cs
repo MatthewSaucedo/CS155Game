@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 
 namespace ClashNSmash
 {
@@ -16,6 +17,7 @@ namespace ClashNSmash
     }
     class Level
     {
+
         private Map map;
         private List<Enemy> characters = new List<Enemy>();
         private Player player;
@@ -27,21 +29,11 @@ namespace ClashNSmash
 
         public Level()
         {
-            Map = new Map();
-            player = new Player();
-            player.X = 2;
-            player.Y = 2;
-            Map.Tiles[2, 2].setOccupant(player);
-            Enemy newEnemy = new GelCube();
-            characters.Add(newEnemy);
-            Map.Tiles[4, 2].setOccupant(newEnemy);
-            newEnemy.X = 4;
-            newEnemy.Y = 2;
-            newEnemy = new GelCube();
-            characters.Add(newEnemy);
-            Map.Tiles[4, 4].setOccupant(newEnemy);
-            newEnemy.X = 4;
-            newEnemy.Y = 4;
+            StreamReader file = new StreamReader("..\\..\\LevelData.txt");
+            string mapText = file.ReadToEnd();
+            file.Close();
+            Map = new Map(mapText);
+            AddCharacters(mapText);
         }
         public Character GetLastEnemy()
         {
@@ -51,18 +43,59 @@ namespace ClashNSmash
         {
             for(int i = 0; i < characters.Count; i++)
             {
-                coord moveCoord = characters[i].patrolBlock();
-                move(characters[i], moveCoord.x, moveCoord.y);
+                if (characters[i].Alive)
+                {
+                    coord moveCoord = characters[i].patrolBlock(map);
+                    move(characters[i], moveCoord.x, moveCoord.y);
+                }
+                else
+                {
+                    map.getTile(characters[i].X, characters[i].Y).setOccupant(null);
+                    characters.RemoveAt(i);
+                }
             }
         }
-
         public string ExtractBattleLog()
         {
             string returnString = battleLogText;
             battleLogText = "";
             return returnString;
         }
-        
+        public void AddCharacters(string mapText)
+        {
+            string[] split = mapText.Split('\n');
+            int width = split[0].Length;
+            int height = split.Length - 1;
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    if (split[y][x] != ' ' && split[y][x] != 'w')
+                        AddCharacter(split[y][x], x, y);
+                }
+            }
+        }
+        public void AddCharacter (char type, int x, int y)
+        {
+            Character newCharacter;
+            switch (type)
+            {
+                case '@':
+                    newCharacter = new Player();
+                    player = (Player)newCharacter;
+                    newCharacter.X = x;
+                    newCharacter.Y = y;
+                    map.getTile(x,y).setOccupant(newCharacter);
+                    break;
+                case 'G':
+                    newCharacter = new GelCube();
+                    newCharacter.X = x;
+                    newCharacter.Y = y;
+                    characters.Add((Enemy)newCharacter);
+                    map.getTile(x,y).setOccupant(newCharacter);
+                    break;
+            }
+        }
         public void move (Character actor, int dx, int dy)
         {
             Tile targetTile;
@@ -78,7 +111,7 @@ namespace ClashNSmash
             if (targetY < 0)
                 targetY += Map.Height;
 
-            if (Map.Tiles[targetX, targetY].Icon != '■')
+            if (Map.Tiles[targetX, targetY].Icon != 'w')
             {
                 targetTile = Map.Tiles[targetX, targetY];
                 // Move onto empty space
@@ -95,7 +128,7 @@ namespace ClashNSmash
                     Character target = targetTile.getOccupant();
                     int damageDealt = actor.dealAttack(target);
                     battleLogText += actor.Name + " strikes " + target.Name + ", dealing " + damageDealt + " damage!\n";
-                    if (target.Existence == false)
+                    if (!target.Alive)
                     {
                         targetTile.setOccupant(null);
                         lastEnemy = null;

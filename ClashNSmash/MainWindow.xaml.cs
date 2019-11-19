@@ -65,7 +65,7 @@ namespace ClashNSmash
             BattleLogScrollViewer.Content += level.ExtractBattleLog();
             BattleLogScrollViewer.ScrollToEnd();
 
-            if (!level.Player.Existence)
+            if (!level.Player.Alive)
             {
                 GameEndLabel.Content = "GAME OVER";
             }
@@ -75,7 +75,7 @@ namespace ClashNSmash
             foreach (Image child in MapGrid.Children)
             {
                 Char tempTileChar = level.Map.Tiles[Grid.GetColumn(child), Grid.GetRow(child)].Icon;
-                if (tempTileChar == '■')
+                if (tempTileChar == 'w')
                     child.Source = wallBitmap;
                 else if (tempTileChar == ' ')
                     child.Source = floorBitmap;
@@ -90,22 +90,22 @@ namespace ClashNSmash
 
         private void OnButtonKeyDown(object sender, KeyEventArgs e)
         {
-            if(e.Key == Key.Up && level.Player.Existence)
+            if(e.Key == Key.Up && level.Player.Alive)
             {
                 level.move(level.Player, 0,-1);
                 refresh();
             }
-            if(e.Key == Key.Down && level.Player.Existence)
+            if(e.Key == Key.Down && level.Player.Alive)
             {
                 level.move(level.Player, 0, 1);
                 refresh();
             }
-            if(e.Key == Key.Right && level.Player.Existence)
+            if(e.Key == Key.Right && level.Player.Alive)
             {
                 level.move(level.Player, 1, 0);
                 refresh();
             }
-            if(e.Key == Key.Left && level.Player.Existence)
+            if(e.Key == Key.Left && level.Player.Alive)
             {
                 level.move(level.Player, -1,0);
                 refresh();

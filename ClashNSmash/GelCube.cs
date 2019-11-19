@@ -12,14 +12,14 @@ namespace ClashNSmash
         int patrolCounterMax = 4;
         int patrolCounter = 1;
         //constructor
-        public GelCube() : base("Gelatinous Cube", 10, 0, 3)
+        public GelCube() : base("Gelatinous Cube", 10, 10, 0)
         {
             Icon = 'G';
         }
         //override
-        public override coord patrolBlock()
+        public override coord patrolBlock(Map map)
         {
-            if (patrolCounter >= patrolCounterMax)
+            if (patrolCounter > patrolCounterMax)
                 patrolCounter = 1;
 
             coord returnCoord;
@@ -48,7 +48,6 @@ namespace ClashNSmash
             {
                 returnCoord = new coord(0, 0);
             }
-            patrolCounter++;
             return returnCoord;
         }
     }

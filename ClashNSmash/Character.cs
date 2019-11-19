@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ClashNSmash
 {
-    public class Character
+    public abstract class Character
     {
         private string name;
         private int x;
@@ -15,34 +15,26 @@ namespace ClashNSmash
         private int health;
         private int attack;
         private int defense;
-        private bool existence;
+        private bool alive;
         private char icon;
 
         public string Name { get => name; set => name = value; }
         public int Health { get => health; set => health = value; }
         public int Attack { get => attack; set => attack = value; }
         public int Defense { get => defense; set => defense = value; }
-        public bool Existence { get => existence; set => existence = value; }
+        public bool Alive { get => alive; set => alive = value; }
         public int X { get => x; set => x = value; }
         public int Y { get => y; set => y = value; }
         public char Icon { get => icon; set => icon = value; }
 
         //constructor
-        public Character()
-        {
-            this.name = "Default Character";
-            this.health = 5;
-            this.attack = 3;
-            this.defense = 1;
-            this.existence = true;
-        }
         public Character(string name, int health, int attack, int defense)
         {
             this.name = name;
             this.health = health;
             this.attack = attack;
             this.defense = defense;
-            this.existence = true;
+            this.alive = true;
         }
         //method
         public int dealAttack(Character target)
@@ -54,7 +46,7 @@ namespace ClashNSmash
                 if (target.Health <= 0)
                 {
                     target.Health = 0;
-                    target.Existence = false;
+                    target.Alive = false;
                 }
             }
             else
@@ -82,7 +74,7 @@ namespace ClashNSmash
             temp += "Health: " + Health + "\n";
             temp += "Attack: " + Attack + "\n";
             temp += "Defense: " + Defense + "\n";
-            temp += "Exist: " + Existence + "\n";
+            temp += "Alive: " + Alive + "\n";
             return temp;
         }
     }

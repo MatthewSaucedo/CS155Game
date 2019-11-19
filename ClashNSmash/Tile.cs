@@ -6,20 +6,27 @@ using System.Threading.Tasks;
 
 namespace ClashNSmash
 {
-    class Tile
+    public class Tile
     {
         private char icon;
         private Character occupant;
         public char Icon { get => icon; set => icon = value; }
-        public Tile(string type)
+        public Tile(char type)
         {
-            if (type.ToLower() == "floor")
+            switch (type)
             {
-                Icon = ' ';
-            }
-            else if (type.ToLower() == "wall")
-            {
-                Icon = '■';
+                case ' ':
+                    Icon = ' ';
+                    break;
+                case 'w':
+                    Icon = 'w';
+                    break;
+                case '@':
+                    setOccupant(new Player());
+                    break;
+                case 'G':
+                    setOccupant(new GelCube());
+                    break;
             }
         }
         public Character getOccupant ()

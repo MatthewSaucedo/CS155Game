@@ -20,7 +20,7 @@ namespace ClashNSmash
             temp += "ROOOAR";
             return temp;
         }
-        public virtual coord patrolBlock()
+        public virtual coord patrolBlock(Map map)
         {
             return new coord(0, 0);
         }
