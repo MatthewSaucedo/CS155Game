@@ -26,6 +26,7 @@ namespace ClashNSmash
         static BitmapImage playerBitmap = new BitmapImage(new Uri(@"\Images\Player.png", UriKind.Relative));
         static BitmapImage skeletonBitmap = new BitmapImage(new Uri(@"\Images\tempskeleton.png", UriKind.Relative));
         static BitmapImage gelatinousCubeBitmap = new BitmapImage(new Uri(@"\Images\gelatinousCube.png", UriKind.Relative));
+        static BitmapImage stairsDownBitmap = new BitmapImage(new Uri(@"\Images\StairsDown.png", UriKind.Relative));
         public MainWindow()
         {
             InitializeComponent();
@@ -33,6 +34,7 @@ namespace ClashNSmash
             level = new Level();
 
             gridInit();
+
             this.KeyDown += new KeyEventHandler(OnButtonKeyDown);
         }
 
@@ -69,16 +71,22 @@ namespace ClashNSmash
             {
                 GameEndLabel.Content = "GAME OVER";
             }
+            if (level.GameWin())
+            {
+                GameEndLabel.Content = "YOU WIN";
+            }
             level.enemiesAct();
             PlayerInfoLabel.Content = "" + level.Player;
             EnemyInfoLabel.Content = "" + level.GetLastEnemy();
             foreach (Image child in MapGrid.Children)
             {
-                Char tempTileChar = level.Map.Tiles[Grid.GetColumn(child), Grid.GetRow(child)].Icon;
+                Char tempTileChar = level.Map.Tiles[Grid.GetColumn(child), Grid.GetRow(child)].GetIcon();
                 if (tempTileChar == 'w')
                     child.Source = wallBitmap;
                 else if (tempTileChar == ' ')
                     child.Source = floorBitmap;
+                else if (tempTileChar == '+')
+                    child.Source = stairsDownBitmap;
                 else if (tempTileChar == '@')
                     child.Source = playerBitmap;
                 else if (tempTileChar == 'S')
@@ -88,6 +96,7 @@ namespace ClashNSmash
             }
         }
 
+        //listeners
         private void OnButtonKeyDown(object sender, KeyEventArgs e)
         {
             if(e.Key == Key.Up && level.Player.Alive)
@@ -110,11 +119,6 @@ namespace ClashNSmash
                 level.move(level.Player, -1,0);
                 refresh();
             }
-        }
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
         }
     }
 }

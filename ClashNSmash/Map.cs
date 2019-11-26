@@ -16,6 +16,7 @@ namespace ClashNSmash
         public int Width { get => width; set => width = value; }
         public int Height { get => height; set => height = value; }
 
+        //contructor
         public Map()
         {
 
@@ -27,25 +28,29 @@ namespace ClashNSmash
 
             buildMapDefault();
         }
-
         public Map(string mapText)
         {
             string[] split = mapText.Split('\n');
             width = split[0].Length-1;
-            height = split.Length-1;
+            height = split.Length;
             Tiles = new Tile[width, height];
+            Console.WriteLine(split[0].Length);
+            Console.WriteLine(split.Length);
             for (int y = 0; y < height; y++)
             {
                 for (int x = 0; x < width; x++)
                 {
                     if (split[y][x] == 'w')
                         Tiles[x, y] = new Tile('w');
+                    else if (split[y][x] == '+')
+                        Tiles[x, y] = new Tile('+');
                     else
                         Tiles[x, y] = new Tile(' ');
                 }
             }
         }
 
+        //method
         public Tile getTile(int x, int y)
         {
             return Tiles[x, y];
@@ -67,6 +72,7 @@ namespace ClashNSmash
             }
         }
 
+        //override
         public override string ToString()
         {
             string returnString = "";
@@ -74,7 +80,7 @@ namespace ClashNSmash
             {
                 for (int x = 0; x < Width; x++)
                 {
-                    returnString += Tiles[x, y].Icon;
+                    returnString += Tiles[x, y].GetIcon();
                 }
                 returnString += "\n";
             }

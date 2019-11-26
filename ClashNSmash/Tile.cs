@@ -10,36 +10,47 @@ namespace ClashNSmash
     {
         private char icon;
         private Character occupant;
-        public char Icon { get => icon; set => icon = value; }
         public Tile(char type)
         {
             switch (type)
             {
                 case ' ':
-                    Icon = ' ';
+                    icon = ' ';
                     break;
                 case 'w':
-                    Icon = 'w';
+                    icon = 'w';
+                    break;
+                case '+':
+                    icon = '+';
                     break;
                 case '@':
-                    setOccupant(new Player());
+                    icon = ' ';
+                    SetOccupant(new Player());
                     break;
                 case 'G':
-                    setOccupant(new GelCube());
+                    icon = ' ';
+                    SetOccupant(new GelCube());
                     break;
             }
         }
-        public Character getOccupant ()
+        public char GetIcon()
+        {
+            if (this.occupant == null)
+            {
+                return icon;
+            }
+            else
+            {
+                return occupant.Icon;
+            }
+        }
+        public Character GetOccupant ()
         {
             return occupant;
         }
-        public void setOccupant (Character newOccupant)
+        public void SetOccupant (Character newOccupant)
         {
             this.occupant = newOccupant;
-            if (newOccupant == null)
-                Icon = ' ';
-            else
-                Icon = newOccupant.Icon;
         }
     }
 }

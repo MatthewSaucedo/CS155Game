@@ -17,27 +17,52 @@ namespace ClashNSmash
     }
     class Level
     {
-
+        //variables
         private Map map;
         private List<Enemy> characters = new List<Enemy>();
         private Player player;
         private Character lastEnemy;
+        private bool gameWin = false;
         private string battleLogText;
+        private string[] mapText;
+        private int floor = 0;
 
+        //properties
         public Player Player { get => player; set => player = value; }
         internal Map Map { get => map; set => map = value; }
+        internal Character LastEnemy { get => lastEnemy; set => lastEnemy = value; }
 
+        //contructor
         public Level()
         {
             StreamReader file = new StreamReader("..\\..\\LevelData.txt");
-            string mapText = file.ReadToEnd();
+            mapText = file.ReadToEnd().Split(new string[] { "\r\nBREAK\r\n" }, StringSplitOptions.None);
+            //string mapText = file.ReadToEnd();
             file.Close();
-            Map = new Map(mapText);
-            AddCharacters(mapText);
+            GenerateFloor(floor);
         }
+
+        //methods
         public Character GetLastEnemy()
         {
             return lastEnemy;
+        }
+        public void DownStairs()
+        {
+            if (floor < mapText.Length - 1)
+                GenerateFloor(++floor);
+            else
+                gameWin = true;
+
+        }
+        public bool GameWin()
+        {
+            return gameWin;
+        }
+        public void GenerateFloor(int floor)
+        {
+            Map = new Map(mapText[floor]);
+            AddCharacters(mapText[floor]);
         }
         public void enemiesAct()
         {
@@ -50,7 +75,7 @@ namespace ClashNSmash
                 }
                 else
                 {
-                    map.getTile(characters[i].X, characters[i].Y).setOccupant(null);
+                    map.getTile(characters[i].X, characters[i].Y).SetOccupant(null);
                     characters.RemoveAt(i);
                 }
             }
@@ -63,9 +88,10 @@ namespace ClashNSmash
         }
         public void AddCharacters(string mapText)
         {
+            characters.Clear();
             string[] split = mapText.Split('\n');
-            int width = split[0].Length;
-            int height = split.Length - 1;
+            int width = split[0].Length-1;
+            int height = split.Length;
             for (int y = 0; y < height; y++)
             {
                 for (int x = 0; x < width; x++)
@@ -85,14 +111,14 @@ namespace ClashNSmash
                     player = (Player)newCharacter;
                     newCharacter.X = x;
                     newCharacter.Y = y;
-                    map.getTile(x,y).setOccupant(newCharacter);
+                    map.getTile(x,y).SetOccupant(newCharacter);
                     break;
                 case 'G':
                     newCharacter = new GelCube();
                     newCharacter.X = x;
                     newCharacter.Y = y;
                     characters.Add((Enemy)newCharacter);
-                    map.getTile(x,y).setOccupant(newCharacter);
+                    map.getTile(x,y).SetOccupant(newCharacter);
                     break;
             }
         }
@@ -110,30 +136,35 @@ namespace ClashNSmash
                 targetY -= Map.Height;
             if (targetY < 0)
                 targetY += Map.Height;
-
-            if (Map.Tiles[targetX, targetY].Icon != 'w')
+            targetTile = Map.Tiles[targetX, targetY];
+            if (targetTile.GetIcon() == '+' && actor == player)
+            {
+                DownStairs();
+            }
+            else if (targetTile.GetIcon() != 'w')
             {
                 targetTile = Map.Tiles[targetX, targetY];
                 // Move onto empty space
-                if (targetTile.getOccupant() == null)
+                if (targetTile.GetOccupant() == null)
                 {
-                    targetTile.setOccupant(actor);
-                    Map.Tiles[actor.X, actor.Y].setOccupant(null);
+                    targetTile.SetOccupant(actor);
+                    Map.Tiles[actor.X, actor.Y].SetOccupant(null);
                     actor.X = targetX;
                     actor.Y = targetY;
                 }
                 // Interract with occupant of occupied space
                 else
                 {
-                    Character target = targetTile.getOccupant();
+                    Character target = targetTile.GetOccupant();
                     int damageDealt = actor.dealAttack(target);
                     battleLogText += actor.Name + " strikes " + target.Name + ", dealing " + damageDealt + " damage!\n";
                     if (!target.Alive)
                     {
-                        targetTile.setOccupant(null);
+                        targetTile.SetOccupant(null);
                         lastEnemy = null;
                         battleLogText += "The " + target.Name + " is slain...\n";
                     }
+                    /* retaliation?
                     else
                     {
                         int damageTaken = target.dealAttack(actor);
@@ -141,10 +172,11 @@ namespace ClashNSmash
                         lastEnemy = target;
                         if (actor.Health <= 0)
                         {
-                            Map.Tiles[actor.X, actor.Y].setOccupant(null);
+                            Map.Tiles[actor.X, actor.Y].SetOccupant(null);
                             battleLogText += "- G A M E   O V E R -\n";
                         }
                     }
+                    */
                 }
             }
         }

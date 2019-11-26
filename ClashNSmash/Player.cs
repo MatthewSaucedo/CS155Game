@@ -9,7 +9,7 @@ namespace ClashNSmash
     public class Player : Character
     {
         //constructor
-        public Player() : base("Player", 10, 3, 1)
+        public Player() : base("Player", 10, 3, 100)
         {
             Icon = '@';
         }

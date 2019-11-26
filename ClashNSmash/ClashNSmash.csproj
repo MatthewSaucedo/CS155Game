@@ -123,5 +123,12 @@
   <ItemGroup>
     <Resource Include="LevelData.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\StairsDown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Dragon.png" />
+    <Resource Include="Images\Snake.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,11 +1,43 @@
+wwwwwwwwwww
+www  ww  +w
+w  G   G   
+wG   G   G 
+w  G   G   
+wG   G   G 
+w  G   G   
+wG   G   G 
+w@ G wwG ww
 w wwwwwwwww
-w         w
-w   G     w
+BREAK
+w w wwwwwww
+w w w  w@w
+w w wG w ww
+w w wwww  w
+  w   wwG 
+wwwww w www
+w   w w + w
+w w w wG  w
+w w w     w
+w w wwwwwww
+BREAK
+wwww ww www
+w    w   +w
+wG G w  w w
+     w     
+wG G w    w
+wwwwwwwwwww
+w    w    w
+w @  w G  w
+w    w    w
+wwww ww www
+BREAK
+w wwwwwwwww
+w        +w
+w   G   w w
            
-w   G      
-w          
-w          
-w @    G   
-w          
-w wwwwwwwww
+w   G     w
+w         w
+w         w
+w @    G  w
+w         w
 w wwwwwwwww

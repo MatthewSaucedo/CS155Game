@@ -11,9 +11,9 @@
         <ScrollViewer x:Name="BattleLogScrollViewer" HorizontalAlignment="Left" Height="100" Margin="415,310,0,0" VerticalAlignment="Top" Width="367"/>
         <Label x:Name="PlayerLabel" Content="Player" HorizontalAlignment="Left" Margin="415,19,0,0" VerticalAlignment="Top" Width="170" FontFamily="Wide Latin"/>
         <Label x:Name="EnemyLabel" Content="Enemy" HorizontalAlignment="Left" Margin="612,19,0,0" VerticalAlignment="Top" Width="170" FontFamily="Wide Latin"/>
-        <Label x:Name="GameEndLabel" Content="" HorizontalAlignment="Left" Margin="200,115,0,0" VerticalAlignment="Top" Height="115" Width="441" FontSize="72" FontWeight="Bold">
+        <Label x:Name="GameEndLabel" Content="" HorizontalAlignment="Left" Margin="20,118,0,0" VerticalAlignment="Top" Height="115" Width="395" FontSize="72" FontWeight="Bold">
             <Label.Effect>
-                <DropShadowEffect Color="Red" ShadowDepth="0" BlurRadius="10"/>
+                <DropShadowEffect Color="#FFA0A0A0" ShadowDepth="0" BlurRadius="10"/>
             </Label.Effect>
         </Label>
         <Label x:Name="EnemyInfoLabel" Content="" HorizontalAlignment="Left" Margin="612,55,0,0" VerticalAlignment="Top" Height="255" Width="170" BorderThickness="0"/>
