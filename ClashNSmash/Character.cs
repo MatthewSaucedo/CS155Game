@@ -9,34 +9,29 @@ namespace ClashNSmash
 {
     public abstract class Character
     {
-        private string name;
-        private int x;
-        private int y;
-        private int health;
-        private int attack;
-        private int defense;
-        private bool alive;
-        private char icon;
 
-        public string Name { get => name; set => name = value; }
-        public int Health { get => health; set => health = value; }
-        public int Attack { get => attack; set => attack = value; }
-        public int Defense { get => defense; set => defense = value; }
-        public bool Alive { get => alive; set => alive = value; }
-        public int X { get => x; set => x = value; }
-        public int Y { get => y; set => y = value; }
-        public char Icon { get => icon; set => icon = value; }
+        public string Name { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
+        public int Health { get; set; }
+        public int Attack { get; set; }
+        public int Defense { get; set; }
+        public bool Alive { get; set; }
+        public string AttackVerb { get; set; }
+        public string DeathText { get; set; }
+        public char Icon { get; set; }
 
         //constructor
         public Character(string name, int health, int attack, int defense)
         {
-            this.name = name;
-            this.health = health;
-            this.attack = attack;
-            this.defense = defense;
-            this.alive = true;
+            this.Name = name;
+            this.Health = health;
+            this.Attack = attack;
+            this.Defense = defense;
+            this.Alive = true;
         }
         //method
+        //This character attacks another
         public int dealAttack(Character target)
         {
             int damageDealt = Attack - target.Defense;

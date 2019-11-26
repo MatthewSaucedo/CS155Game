@@ -26,6 +26,8 @@ namespace ClashNSmash
         static BitmapImage playerBitmap = new BitmapImage(new Uri(@"\Images\Player.png", UriKind.Relative));
         static BitmapImage skeletonBitmap = new BitmapImage(new Uri(@"\Images\tempskeleton.png", UriKind.Relative));
         static BitmapImage gelatinousCubeBitmap = new BitmapImage(new Uri(@"\Images\gelatinousCube.png", UriKind.Relative));
+        static BitmapImage snakeBitmap = new BitmapImage(new Uri(@"\Images\Snake.png", UriKind.Relative));
+        static BitmapImage dragonBitmap = new BitmapImage(new Uri(@"\Images\Dragon.png", UriKind.Relative));
         static BitmapImage stairsDownBitmap = new BitmapImage(new Uri(@"\Images\StairsDown.png", UriKind.Relative));
         public MainWindow()
         {
@@ -38,6 +40,7 @@ namespace ClashNSmash
             this.KeyDown += new KeyEventHandler(OnButtonKeyDown);
         }
 
+        //add image elements to the gui to represent the grid
         private void gridInit()
         {
             MapGrid.Width = level.Map.Width * 32;
@@ -60,24 +63,32 @@ namespace ClashNSmash
                     MapGrid.Children.Add(tempImage);
                 }
             }
-            refresh();
+            RefreshImages();
         }
         private void refresh()
         {
+            //game lose/ game win scenarios
+            if (!level.Player.Alive) GameEndLabel.Content = "GAME OVER";
+            if (level.GameWin()) GameEndLabel.Content = "YOU WIN";
+
+            //enemies take their turn
+            level.EnemiesAct();
+
+            //update battle log
             BattleLogScrollViewer.Content += level.ExtractBattleLog();
             BattleLogScrollViewer.ScrollToEnd();
 
-            if (!level.Player.Alive)
-            {
-                GameEndLabel.Content = "GAME OVER";
-            }
-            if (level.GameWin())
-            {
-                GameEndLabel.Content = "YOU WIN";
-            }
-            level.enemiesAct();
+            //update character status boxes
             PlayerInfoLabel.Content = "" + level.Player;
             EnemyInfoLabel.Content = "" + level.GetLastEnemy();
+
+            //update images
+            RefreshImages();
+        }
+
+        //update images
+        public void RefreshImages()
+        {
             foreach (Image child in MapGrid.Children)
             {
                 Char tempTileChar = level.Map.Tiles[Grid.GetColumn(child), Grid.GetRow(child)].GetIcon();
@@ -90,9 +101,11 @@ namespace ClashNSmash
                 else if (tempTileChar == '@')
                     child.Source = playerBitmap;
                 else if (tempTileChar == 'S')
-                    child.Source = skeletonBitmap;
+                    child.Source = snakeBitmap;
                 else if (tempTileChar == 'G')
                     child.Source = gelatinousCubeBitmap;
+                else if (tempTileChar == 'D')
+                    child.Source = dragonBitmap;
             }
         }
 
@@ -101,22 +114,26 @@ namespace ClashNSmash
         {
             if(e.Key == Key.Up && level.Player.Alive)
             {
-                level.move(level.Player, 0,-1);
+                level.Move(level.Player, 0,-1);
                 refresh();
             }
             if(e.Key == Key.Down && level.Player.Alive)
             {
-                level.move(level.Player, 0, 1);
+                level.Move(level.Player, 0, 1);
                 refresh();
             }
             if(e.Key == Key.Right && level.Player.Alive)
             {
-                level.move(level.Player, 1, 0);
+                level.Move(level.Player, 1, 0);
                 refresh();
             }
-            if(e.Key == Key.Left && level.Player.Alive)
+            if (e.Key == Key.Left && level.Player.Alive)
             {
-                level.move(level.Player, -1,0);
+                level.Move(level.Player, -1, 0);
+                refresh();
+            }
+            if (e.Key == Key.Space && level.Player.Alive)
+            {
                 refresh();
             }
         }

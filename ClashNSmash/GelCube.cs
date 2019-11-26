@@ -15,6 +15,8 @@ namespace ClashNSmash
         public GelCube() : base("Gelatinous Cube", 10, 10, 0)
         {
             Icon = 'G';
+            AttackVerb = "squelches";
+            DeathText = "The " + Name + " fizzles away";
         }
         //override
         public override coord patrolBlock(Map map)

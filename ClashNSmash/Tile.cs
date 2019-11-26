@@ -31,6 +31,14 @@ namespace ClashNSmash
                     icon = ' ';
                     SetOccupant(new GelCube());
                     break;
+                case 'S':
+                    icon = ' ';
+                    SetOccupant(new Snake());
+                    break;
+                case 'D':
+                    icon = ' ';
+                    SetOccupant(new Dragon());
+                    break;
             }
         }
         public char GetIcon()

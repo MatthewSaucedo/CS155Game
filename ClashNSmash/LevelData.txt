@@ -1,4 +1,15 @@
 wwwwwwwwwww
+w S      +w
+w  S      w
+w   S     w
+w    S    w
+w     S   w
+w      S  w
+w       S w
+w@       Sw
+w wwwwwwwww
+BREAK
+wwwwwwwwwww
 www  ww  +w
 w  G   G   
 wG   G   G 

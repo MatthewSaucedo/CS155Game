@@ -50,7 +50,10 @@ namespace ClashNSmash
         public void DownStairs()
         {
             if (floor < mapText.Length - 1)
+            {
                 GenerateFloor(++floor);
+                battleLogText += "Now entering floor " + (floor + 1) + '\n';
+            }
             else
                 gameWin = true;
 
@@ -64,14 +67,14 @@ namespace ClashNSmash
             Map = new Map(mapText[floor]);
             AddCharacters(mapText[floor]);
         }
-        public void enemiesAct()
+        public void EnemiesAct()
         {
             for(int i = 0; i < characters.Count; i++)
             {
                 if (characters[i].Alive)
                 {
                     coord moveCoord = characters[i].patrolBlock(map);
-                    move(characters[i], moveCoord.x, moveCoord.y);
+                    Move(characters[i], moveCoord.x, moveCoord.y);
                 }
                 else
                 {
@@ -96,7 +99,7 @@ namespace ClashNSmash
             {
                 for (int x = 0; x < width; x++)
                 {
-                    if (split[y][x] != ' ' && split[y][x] != 'w')
+                    if (split[y][x] != ' ' && split[y][x] != 'w' && split[y][x] != '+')
                         AddCharacter(split[y][x], x, y);
                 }
             }
@@ -107,43 +110,63 @@ namespace ClashNSmash
             switch (type)
             {
                 case '@':
-                    newCharacter = new Player();
-                    player = (Player)newCharacter;
-                    newCharacter.X = x;
-                    newCharacter.Y = y;
-                    map.getTile(x,y).SetOccupant(newCharacter);
+                    if (player == null)
+                        player = new Player();
+                    player.X = x;
+                    player.Y = y;
+                    map.getTile(x,y).SetOccupant(player);
                     break;
                 case 'G':
                     newCharacter = new GelCube();
                     newCharacter.X = x;
                     newCharacter.Y = y;
                     characters.Add((Enemy)newCharacter);
-                    map.getTile(x,y).SetOccupant(newCharacter);
+                    map.getTile(x, y).SetOccupant(newCharacter);
+                    break;
+                case 'S':
+                    newCharacter = new Snake();
+                    newCharacter.X = x;
+                    newCharacter.Y = y;
+                    characters.Add((Enemy)newCharacter);
+                    map.getTile(x, y).SetOccupant(newCharacter);
+                    break;
+                case 'D':
+                    newCharacter = new Dragon();
+                    newCharacter.X = x;
+                    newCharacter.Y = y;
+                    characters.Add((Enemy)newCharacter);
+                    map.getTile(x, y).SetOccupant(newCharacter);
                     break;
             }
         }
-        public void move (Character actor, int dx, int dy)
+        public void Move (Character actor, int dx, int dy)
         {
-            Tile targetTile;
-            int targetX = actor.X + dx;
-            int targetY = actor.Y + dy;
+            //If no movement, leave
+            if (dy == 0 && dx == 0)
+            {
+                return;
+            }
 
+            //Wrapping position from one edge of map to the other
+            int targetX = actor.X+dx;
+            int targetY = actor.Y+dy;
             if (targetX > Map.Width - 1)
                 targetX -= Map.Width;
-            if (targetX < 0)
+            else if (targetX < 0)
                 targetX += Map.Width;
             if (targetY > Map.Height - 1)
                 targetY -= Map.Height;
-            if (targetY < 0)
+            else if (targetY < 0)
                 targetY += Map.Height;
-            targetTile = Map.Tiles[targetX, targetY];
+
+
+            Tile targetTile = Map.Tiles[targetX, targetY];
             if (targetTile.GetIcon() == '+' && actor == player)
             {
                 DownStairs();
             }
             else if (targetTile.GetIcon() != 'w')
             {
-                targetTile = Map.Tiles[targetX, targetY];
                 // Move onto empty space
                 if (targetTile.GetOccupant() == null)
                 {
@@ -156,13 +179,19 @@ namespace ClashNSmash
                 else
                 {
                     Character target = targetTile.GetOccupant();
+                    //Don't let enemies hit each other
+                    if (actor is Enemy && target is Enemy)
+                        return;
+                    if (actor is Player)
+                        lastEnemy = target;
                     int damageDealt = actor.dealAttack(target);
-                    battleLogText += actor.Name + " strikes " + target.Name + ", dealing " + damageDealt + " damage!\n";
+                    battleLogText += actor.Name + " " + actor.AttackVerb +" " + target.Name + ", dealing " + damageDealt + " damage!\n";
                     if (!target.Alive)
                     {
                         targetTile.SetOccupant(null);
                         lastEnemy = null;
-                        battleLogText += "The " + target.Name + " is slain...\n";
+                        battleLogText += target.DeathText + '\n';
+                        player.AddScore(10);
                     }
                     /* retaliation?
                     else
