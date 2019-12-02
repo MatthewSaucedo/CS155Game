@@ -12,14 +12,15 @@ namespace ClashNSmash
         int patrolCounterMax = 4;
         int patrolCounter = 1;
         //constructor
-        public GelCube() : base("Gelatinous Cube", 10, 10, 0)
+        public GelCube() : base("Gelatinous Cube", 10, 5, 0)
         {
             Icon = 'G';
             AttackVerb = "squelches";
-            DeathText = "The " + Name + " fizzles away";
+            DeathText = "The " + Name + " fizzles away, awarding " + Score + " score";
+            Score = 3;
         }
         //override
-        public override coord patrolBlock(Map map)
+        public override coord Patrol(Map map)
         {
             if (patrolCounter > patrolCounterMax)
                 patrolCounter = 1;

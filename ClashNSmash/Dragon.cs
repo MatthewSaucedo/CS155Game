@@ -9,48 +9,43 @@ namespace ClashNSmash
     class Dragon : Enemy
     {
         //variables
-        int patrolCounterMax = 4;
-        int patrolCounter = 1;
+        private int baseHealth;
         //constructor
-        public Dragon() : base("Dragon", 10, 10, 0)
+        public Dragon() : base("Dragon", 15, 5, 0)
         {
             Icon = 'D';
             AttackVerb = "immolates";
-            DeathText = Name + " bursts into flames and is soonafter reduced to ash";
+            DeathText = Name + " crumbles to ash, awarding " + Score + " score";
+            Score = 30;
+            baseHealth = Health;
         }
         //override
-        public override coord patrolBlock(Map map)
+        public override coord Patrol(Map map)
         {
-            if (patrolCounter > patrolCounterMax)
-                patrolCounter = 1;
-
-            coord returnCoord;
-
-            if (patrolCounter == 1)
+            if (Health < baseHealth)
             {
-                patrolCounter = 2;
-                returnCoord = new coord(1, 0);
+                for (int x = 0; x < map.Width; x++)
+                {
+                    if (map.getTile(x, Y).GetOccupant() != null && map.getTile(x, Y).GetOccupant().Icon == '@')
+                    {
+                        if (X < x)
+                            return new coord(1, 0);
+                        else
+                            return new coord(-1, 0);
+                    }
+                }
+                for (int y = 0; y < map.Height; y++)
+                {
+                    if (map.getTile(X, y).GetOccupant() != null && map.getTile(X, y).GetOccupant().Icon == '@')
+                    {
+                        if (Y < y)
+                            return new coord(0, 1);
+                        else
+                            return new coord(0, -1);
+                    }
+                }
             }
-            else if (patrolCounter == 2)
-            {
-                patrolCounter = 3;
-                returnCoord = new coord(0, -1);
-            }
-            else if (patrolCounter == 3)
-            {
-                patrolCounter = 4;
-                returnCoord = new coord(-1, 0);
-            }
-            else if (patrolCounter == 4)
-            {
-                patrolCounter = 1;
-                returnCoord = new coord(0, 1);
-            }
-            else
-            {
-                returnCoord = new coord(0, 0);
-            }
-            return returnCoord;
+            return new coord(0, 0);
         }
     }
 }

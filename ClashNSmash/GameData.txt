@@ -6,49 +6,49 @@ w    S    w
 w     S   w
 w      S  w
 w       S w
-w@       Sw
-w wwwwwwwww
+w        Sw
+w@wwwwwwwww
 BREAK
 wwwwwwwwwww
 www  ww  +w
-w  G   G   
-wG   G   G 
-w  G   G   
-wG   G   G 
-w  G   G   
-wG   G   G 
+w  G   G ww
+wG   G   ww
+w  G   G ww
+wG   G   ww
+w  G   G ww
+wG   G   ww
 w@ G wwG ww
-w wwwwwwwww
+wwwwwwwwwww
 BREAK
 w w wwwwwww
-w w w  w@w
-w w wG w ww
-w w wwww  w
-  w   wwG 
+w w  w  @ww
+w wG wG www
+w w  ww   w
+  wG  wwG 
 wwwww w www
 w   w w + w
 w w w wG  w
-w w w     w
+w w w   G w
 w w wwwwwww
 BREAK
-wwww ww www
+wwww w wwww
 w    w   +w
 wG G w  w w
-     w     
+  G  w     
 wG G w    w
 wwwwwwwwwww
 w    w    w
-w @  w G  w
+w @  wG G w
 w    w    w
-wwww ww www
+wwww w wwww
 BREAK
-w wwwwwwwww
-w        +w
-w   G   w w
-           
-w   G     w
+wwwwwwwwwww
+w    C    w
 w         w
+wwwww wwwww
+w   wDw   w
+wG  w w G w
 w         w
-w @    G  w
+w @       w
 w         w
-w wwwwwwwww
+wwwwwwwwwww

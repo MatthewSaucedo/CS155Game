@@ -9,14 +9,15 @@ namespace ClashNSmash
     class Snake : Enemy
     {
         //constructor
-        public Snake() : base("Snake", 10, 10, 0)
+        public Snake() : base("Snake", 6, 5, 0)
         {
             Icon = 'S';
             AttackVerb = "bites";
-            DeathText = "The " + Name + " falls limp";
+            DeathText = "The " + Name + " falls limp, awarding " + Score + " score";
+            Score = 10;
         }
         //override
-        public override coord patrolBlock(Map map)
+        public override coord Patrol(Map map)
         {
             for (int x = 0; x < map.Width; x++)
             {

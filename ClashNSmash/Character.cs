@@ -20,6 +20,7 @@ namespace ClashNSmash
         public string AttackVerb { get; set; }
         public string DeathText { get; set; }
         public char Icon { get; set; }
+        public int Score { get; set; }
 
         //constructor
         public Character(string name, int health, int attack, int defense)
@@ -49,19 +50,6 @@ namespace ClashNSmash
             return damageDealt;
         }
         //override
-        public override bool Equals(object obj)
-        {
-            if (obj == null || !this.GetType().Equals(obj.GetType()))
-            {
-                return false;
-            }
-            else
-            {
-                Character c = (Character)obj;
-                return ((Name == c.Name) && (Health == c.Health) && (Attack == c.Attack) &&
-                    (Defense == c.Defense));
-            }
-        }
         public override string ToString()
         {
             string temp = "";
@@ -70,6 +58,7 @@ namespace ClashNSmash
             temp += "Attack: " + Attack + "\n";
             temp += "Defense: " + Defense + "\n";
             temp += "Alive: " + Alive + "\n";
+            temp += "Score: " + Score + "\n";
             return temp;
         }
     }

@@ -20,14 +20,9 @@ namespace ClashNSmash
             temp += "ROOOAR";
             return temp;
         }
-        public virtual coord patrolBlock(Map map)
+        public virtual coord Patrol(Map map)
         {
             return new coord(0, 0);
-        }
-        //override
-        public override String ToString()
-        {
-            return base.ToString();
         }
     }
 }

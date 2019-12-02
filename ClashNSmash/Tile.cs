@@ -10,6 +10,10 @@ namespace ClashNSmash
     {
         private char icon;
         private Character occupant;
+        public Tile()
+        {
+            icon = ' ';
+        }
         public Tile(char type)
         {
             switch (type)
@@ -22,6 +26,9 @@ namespace ClashNSmash
                     break;
                 case '+':
                     icon = '+';
+                    break;
+                case 'C':
+                    icon = 'C';
                     break;
                 case '@':
                     icon = ' ';

@@ -44,6 +44,8 @@ namespace ClashNSmash
                         Tiles[x, y] = new Tile('w');
                     else if (split[y][x] == '+')
                         Tiles[x, y] = new Tile('+');
+                    else if (split[y][x] == 'C')
+                        Tiles[x, y] = new Tile('C');
                     else
                         Tiles[x, y] = new Tile(' ');
                 }

@@ -15,7 +15,7 @@ namespace ClashNSmash
             this.y = y;
         }
     }
-    class Level
+    class Game
     {
         //variables
         private Map map;
@@ -33,11 +33,10 @@ namespace ClashNSmash
         internal Character LastEnemy { get => lastEnemy; set => lastEnemy = value; }
 
         //contructor
-        public Level()
+        public Game(string fileName)
         {
-            StreamReader file = new StreamReader("..\\..\\LevelData.txt");
+            StreamReader file = new StreamReader(fileName);
             mapText = file.ReadToEnd().Split(new string[] { "\r\nBREAK\r\n" }, StringSplitOptions.None);
-            //string mapText = file.ReadToEnd();
             file.Close();
             GenerateFloor(floor);
         }
@@ -49,6 +48,7 @@ namespace ClashNSmash
         }
         public void DownStairs()
         {
+            LastEnemy = null;
             if (floor < mapText.Length - 1)
             {
                 GenerateFloor(++floor);
@@ -56,16 +56,15 @@ namespace ClashNSmash
             }
             else
                 gameWin = true;
-
-        }
-        public bool GameWin()
-        {
-            return gameWin;
         }
         public void GenerateFloor(int floor)
         {
             Map = new Map(mapText[floor]);
             AddCharacters(mapText[floor]);
+        }
+        public bool GetGameWin()
+        {
+            return gameWin;
         }
         public void EnemiesAct()
         {
@@ -73,7 +72,7 @@ namespace ClashNSmash
             {
                 if (characters[i].Alive)
                 {
-                    coord moveCoord = characters[i].patrolBlock(map);
+                    coord moveCoord = characters[i].Patrol(map);
                     Move(characters[i], moveCoord.x, moveCoord.y);
                 }
                 else
@@ -141,7 +140,7 @@ namespace ClashNSmash
         }
         public void Move (Character actor, int dx, int dy)
         {
-            //If no movement, leave
+            //If no movement, leave method
             if (dy == 0 && dx == 0)
             {
                 return;
@@ -165,6 +164,10 @@ namespace ClashNSmash
             {
                 DownStairs();
             }
+            else if (targetTile.GetIcon() == 'C' && actor == player)
+            {
+                gameWin = true;
+            }
             else if (targetTile.GetIcon() != 'w')
             {
                 // Move onto empty space
@@ -178,9 +181,8 @@ namespace ClashNSmash
                 // Interract with occupant of occupied space
                 else
                 {
-                    Character target = targetTile.GetOccupant();
-                    //Don't let enemies hit each other
-                    if (actor is Enemy && target is Enemy)
+                    Character target = targetTile.GetOccupant();                    
+                    if (actor is Enemy && target is Enemy) //Don't let enemies hit each other
                         return;
                     if (actor is Player)
                         lastEnemy = target;
@@ -191,21 +193,8 @@ namespace ClashNSmash
                         targetTile.SetOccupant(null);
                         lastEnemy = null;
                         battleLogText += target.DeathText + '\n';
-                        player.AddScore(10);
+                        actor.Score += target.Score;
                     }
-                    /* retaliation?
-                    else
-                    {
-                        int damageTaken = target.dealAttack(actor);
-                        battleLogText += target.Name + " retaliates at " + actor.Name + ", you take " + damageTaken + " damage!\n";
-                        lastEnemy = target;
-                        if (actor.Health <= 0)
-                        {
-                            Map.Tiles[actor.X, actor.Y].SetOccupant(null);
-                            battleLogText += "- G A M E   O V E R -\n";
-                        }
-                    }
-                    */
                 }
             }
         }
