@@ -79,6 +79,7 @@ namespace ClashNSmash
                 {
                     map.getTile(characters[i].X, characters[i].Y).SetOccupant(null);
                     characters.RemoveAt(i);
+                    i--;
                 }
             }
         }
