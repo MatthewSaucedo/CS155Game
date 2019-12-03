@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
+//represents one full board of tiles
 namespace ClashNSmash
 {
     public class Map

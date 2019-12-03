@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
+//superclass for all entities
 namespace ClashNSmash
 {
     public abstract class Character

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//Superclass for all enemies
 namespace ClashNSmash
 {
     public abstract class Enemy : Character

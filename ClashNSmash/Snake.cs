@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//class for specific enemy Snake
 namespace ClashNSmash
 {
     class Snake : Enemy

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 
+//handles Character movement, turn order, and map generation
 namespace ClashNSmash
 {
     public struct coord

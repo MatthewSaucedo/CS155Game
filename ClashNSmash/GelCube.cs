@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//class for specific enemy Gelatinous Cube
 namespace ClashNSmash
 {
     class GelCube : Enemy
